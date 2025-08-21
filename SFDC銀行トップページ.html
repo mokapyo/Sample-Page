@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFDC銀行 - 安心と信頼のパートナー</title>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+            background-image: url('assets/mori.png'); /* 以前のソースコードと同じ背景画像 */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* 背景を固定 */
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(255, 255, 255, 0.95); /* 半透明の白 */
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky; /* スクロールしてもヘッダーを固定 */
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e3952; /* 紺色 */
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: #1e3952; /* 紺色 */
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 5px 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: #0070d2; /* 青色 */
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #0070d2; /* 青色 */
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: rgba(0, 112, 210, 0.8); /* 半透明の青 */
+            color: #fff;
+            text-align: center;
+            padding: 100px 20px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(5px); /* 背景のぼかし効果 */
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background-color: #1e3952; /* 紺色 */
+            color: #fff;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0070d2; /* ホバーで青色 */
+            transform: translateY(-2px);
+        }
+
+        /* Section Styling */
+        section {
+            background-color: rgba(255, 255, 255, 0.9); /* 半透明の白 */
+            padding: 60px 0;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        section h2 {
+            font-size: 36px;
+            color: #1e3952; /* 紺色 */
+            text-align: center;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .grid-3-col {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h3 {
+            font-size: 22px;
+            color: #0070d2; /* 青色 */
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card p {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .card-link {
+            color: #0070d2;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+        }
+
+        .card-link:hover {
+            text-decoration: underline;
+        }
+
+        /* News Section Specific */
+        .news-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .news-date {
+            font-size: 14px;
+            color: #0070d2;
+            font-weight: 600;
+            min-width: 90px; /* 日付の幅を確保 */
+            margin-right: 20px;
+        }
+
+        .news-title a {
+            font-size: 17px;
+            color: #1e3952;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .news-title a:hover {
+            color: #0070d2;
+            text-decoration: underline;
+        }
+        
+        /* 店舗・ATMセクション用のFlexbox */
+        .branches-atm-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            padding: 0 20px;
+        }
+
+        .branch-atm-card {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            text-align: center;
+            width: calc(50% - 15px); /* 2列表示 */
+            box-sizing: border-box;
+        }
+
+        .branch-atm-card h3 {
+            color: #0070d2;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .branch-atm-card p {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1e3952; /* 紺色 */
+            color: #fff;
+            text-align: center;
+            padding: 30px 20px;
+            font-size: 14px;
+            border-top: 5px solid #0070d2; /* 青いライン */
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #0070d2;
+        }
+
+        .copyright {
+            margin-top: 20px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 38px;
+            }
+            .hero p {
+                font-size: 18px;
+            }
+            nav ul li {
+                margin-left: 20px;
+            }
+            .grid-3-col {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+             .branch-atm-card {
+                width: calc(100% - 15px); /* 1列表示 */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            nav {
+                margin-top: 15px;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul li {
+                margin: 10px 0;
+            }
+            .hero {
+                padding: 80px 20px;
+            }
+            .hero h1 {
+                font-size: 32px;
+            }
+            .hero p {
+                font-size: 16px;
+            }
+            section {
+                padding: 40px 0;
+            }
+            section h2 {
+                font-size: 30px;
+            }
+            .grid-3-col {
+                grid-template-columns: 1fr;
+            }
+            .branches-atm-content {
+                flex-direction: column;
+            }
+            .branch-atm-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">SFDC銀行</a>
+            <nav>
+                <ul>
+                    <li><a href="#company-info">企業情報</a></li>
+                    <li><a href="#services">サービス</a></li>
+                    <li><a href="#news">お知らせ</a></li>
+                    <li><a href="#branches-atm">店舗・ATM</a></li>
+                    <li><a href="#ir-info">IR情報</a></li>
+                    <li><a href="折り返し予約フォーム.html">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>未来を拓く、あなたの金融パートナー。</h1>
+                <p>お客様一人ひとりの「夢」や「目標」を支え、共に成長する銀行を目指します。</p>
+                <a href="#services" class="btn-primary">当行のサービスを見る</a>
+            </div>
+        </section>
+
+        <section id="news">
+            <div class="container">
+                <h2>お知らせ</h2>
+                <div class="news-list">
+                    <div class="news-item">
+                        <span class="news-date">2024.08.19</span>
+                        <span class="news-title"><a href="#">【重要】インターネットバンキングにおけるセキュリティ強化について</a></span>
+                    </div>
+                    <div class="news-item">
+                        <span class="news-date">2024.08.15</span>
+                        <span class="news-title"><a href="#">新NISA口座開設キャンペーンのご案内</a></span>
+                    </div>
+                    <div class="news-item">
+                        <span class="news-date">2024.08.10</span>
+                        <span class="news-title"><a href="#">店舗営業時間変更のお知らせ（横浜支店）</a></span>
+                    </div>
+                    <div class="news-item">
+                        <span class="news-date">2024.08.01</span>
+                        <span class="news-title"><a href="#">サステナビリティレポート2024を公開しました</a></span>
+                    </div>
+                </div>
+                <div style="text-align: center; margin-top: 30px;">
+                    <a href="#" class="btn-primary" style="background-color: #0070d2; font-size: 16px;">お知らせ一覧を見る</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="services">
+            <div class="container">
+                <h2>サービス</h2>
+                <div class="grid-3-col">
+                    <div class="card">
+                        <h3>個人のお客様</h3>
+                        <p>預金、ローン、資産運用など、ライフステージに合わせた最適な金融サービスを提供します。</p>
+                        <a href="#" class="card-link">詳細はこちら</a>
+                    </div>
+                    <div class="card">
+                        <h3>法人のお客様</h3>
+                        <p>事業資金、M&A、海外ビジネス支援など、企業の成長をサポートするサービスです。</p>
+                        <a href="#" class="card-link">詳細はこちら</a>
+                    </div>
+                    <div class="card">
+                        <h3>資産運用</h3>
+                        <p>専門家によるコンサルティングで、お客様の未来を豊かにする資産運用をサポートします。</p>
+                        <a href="#" class="card-link">詳細はこちら</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="branches-atm">
+            <div class="container">
+                <h2>店舗・ATM</h2>
+                <div class="branches-atm-content">
+                    <div class="branch-atm-card">
+                        <h3>店舗を探す</h3>
+                        <p>お近くのSFDC銀行の店舗を検索できます。営業時間やご相談内容も確認可能です。</p>
+                        <a href="#" class="card-link">店舗検索はこちら</a>
+                    </div>
+                    <div class="branch-atm-card">
+                        <h3>ATMを探す</h3>
+                        <p>全国のSFDC銀行ATMの設置場所を検索できます。手数料や利用時間もご確認いただけます。</p>
+                        <a href="#" class="card-link">ATM検索はこちら</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="company-info">
+            <div class="container">
+                <h2>企業情報</h2>
+                <div class="grid-3-col">
+                    <div class="card">
+                        <h3>会社概要</h3>
+                        <p>当行の基本情報、経営理念、歴史についてご紹介します。</p>
+                        <a href="#" class="card-link">詳細はこちら</a>
+                    </div>
+                    <div class="card">
+                        <h3>採用情報</h3>
+                        <p>当行で働くことに関心のある方へ。キャリア採用、新卒採用の募集要項です。</p>
+                        <a href="#" class="card-link">詳細はこちら</a>
+                    </div>
+                    <div class="card">
+                        <h3>CSR活動</h3>
+                        <p>持続可能な社会の実現に向けた当行の取り組みをご紹介します。</p>
+                        <a href="#" class="card-link">詳細はこちら</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ir-info">
+            <div class="container">
+                <h2>IR情報</h2>
+                <div class="grid-3-col">
+                    <div class="card">
+                        <h3>株主・投資家の皆様へ</h3>
+                        <p>経営方針、財務情報、株主総会情報などをご確認いただけます。</p>
+                        <a href="#" class="card-link">詳細はこちら</a>
+                    </div>
+                    <div class="card">
+                        <h3>IRライブラリ</h3>
+                        <p>決算短信、有価証券報告書など、各種IR資料を公開しています。</p>
+                        <a href="#" class="card-link">詳細はこちら</a>
+                    </div>
+                    <div class="card">
+                        <h3>IRニュース</h3>
+                        <p>最新のIR関連情報を掲載しています。</p>
+                        <a href="#" class="card-link">詳細はこちら</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">サイトマップ</a>
+                <a href="#">プライバシーポリシー</a>
+                <a href="#">勧誘方針</a>
+                <a href="#">金融ADR制度</a>
+                <a href="#">Cookieポリシー</a>
+            </div>
+            <p class="copyright">&copy; 2024 SFDC銀行 All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

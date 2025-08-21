@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>電話予約フォーム</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: #333;
+            background-image: url('assets/mori.png'); /* 以前のソースコードと同じ背景画像 */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* 背景を固定 */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column; /* ヘッダーとメインコンテンツを縦に配置 */
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header (from bank-corporate-homepage) */
+        header {
+            background-color: rgba(255, 255, 255, 0.95); /* 半透明の白 */
+            padding: 15px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky; /* スクロールしてもヘッダーを固定 */
+            top: 0;
+            z-index: 1000;
+            width: 100%; /* 幅を画面いっぱいに */
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #1e3952; /* 紺色 */
+            text-decoration: none;
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            color: #1e3952; /* 紺色 */
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            padding: 5px 0;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -5px;
+            left: 0;
+            background-color: #0070d2; /* 青色 */
+            transition: width 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #0070d2; /* 青色 */
+        }
+
+        nav ul li a:hover::after {
+            width: 100%;
+        }
+        /* End Header Styles */
+
+        /* Main Layout Adjustments */
+        .main-layout-container {
+            display: flex;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            width: 90%;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            margin: 40px auto; /* ヘッダーの高さ分調整 + 上下のマージン */
+            box-sizing: border-box; /* paddingを含めて幅を計算 */
+        }
+
+        /* Left Content */
+        .left-content {
+            flex: 1;
+            padding: 40px;
+            background-color: transparent;
+            color: #1e3952;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .left-content h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .left-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Right Form Container */
+        .right-form-container {
+            flex: 1;
+            padding: 40px;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Form Header */
+        .form-header p {
+            color: #555;
+            font-size: 15px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        /* Form Group (Label and Input) */
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        /* Name Group for inline First/Last Name */
+        .name-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+
+        .name-group .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 3px;
+            color: #1e3952;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="date"],
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+            color: #333;
+        }
+
+        /* Submit Button */
+        .submit-button {
+            width: 100%;
+            padding: 15px;
+            background-color: #1e3952; /* 紺色 */
+            color: #ffffff;
+            border: none;
+            border-radius: 6px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #0070d2; /* ホバー時に青色 */
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            nav ul li {
+                margin-left: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+            }
+            nav {
+                margin-top: 15px;
+            }
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul li {
+                margin: 10px 0;
+            }
+            .main-layout-container {
+                flex-direction: column;
+                width: 95%;
+                margin: 20px auto; /* モバイルでのマージン調整 */
+            }
+            .left-content, .right-form-container {
+                flex: none;
+                width: 100%;
+                padding: 30px;
+            }
+            .left-content h2 {
+                font-size: 26px;
+            }
+            .form-header h1 {
+                font-size: 24px;
+            }
+            .name-group {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">SFDC銀行</a>
+            <nav>
+                <ul>
+                    <li><a href="#company-info">企業情報</a></li>
+                    <li><a href="#services">サービス</a></li>
+                    <li><a href="#news">お知らせ</a></li>
+                    <li><a href="#branches-atm">店舗・ATM</a></li>
+                    <li><a href="#ir-info">IR情報</a></li>
+                    <li><a href="#">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="main-layout-container">
+        <div class="left-content">
+            <h2>お問い合わせ・資料請求</h2>
+            <p>当行のサービスにご興味をお持ちいただきありがとうございます。</p>
+            <p>このフォームから、各種サービスに関するご相談、資料請求、または個別のご説明のお申し込みが可能です。</p>
+            <p>お客様の状況に合わせて、最適なサポートを提供いたします。お気軽にお問い合わせください。</p>
+            <p>受付時間：平日 9:00 - 17:00</p>
+            <img src="assets/bankun_s.png" alt="マスコットキャラクター Bankun" style="max-width: 70%; margin: auto;">
+        </div>
+
+        <div class="right-form-container">
+            <div class="form-header">
+                <p>電話予約フォーム<br><br>
+                以下のフォームにご記入の上、送信してください。<br>
+                    後ほど担当者からご連絡いたします。</p>
+            </div>
+
+            <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
+
+            <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00DgK000007esnH" method="POST" onsubmit="formatDatesBeforeSubmit(event)">
+
+                <input type=hidden name="oid" value="00DgK000007esnH">
+                <input type=hidden name="retURL" value="https://www.webassessor.com/wa.do?page=defaultLogin">
+
+                <div class="name-group">
+                     <div class="form-group">
+                        <label for="last_name">姓</label><input  id="last_name" maxlength="80" name="last_name" size="20" type="text" /><br>
+                    </div>
+     
+                    <div class="form-group">
+                        <label for="first_name">名</label><input  id="first_name" maxlength="40" name="first_name" size="20" type="text" /><br>
+                    </div>
+                </div>
+              
+                <div class="form-group">
+                    <label for="company">会社名</label><input  id="company" maxlength="40" name="company" size="20" type="text" /><br>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">役職</label><input  id="title" maxlength="40" name="title" size="20" type="text" /><br>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">メール</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">電話</label><input  id="phone" maxlength="40" name="phone" size="20" type="text" /><br>
+                </div>
+
+                <div class="form-group">
+                    <label for="employees">従業員数</label><input  id="employees" name="employees" size="20" type="text" value="" /><br>
+                </div>
+
+                <div class="form-group">
+                    <label for="country_code">国</label>
+                    <select id="country_code" name="country_code">
+                        <option value="">--選択してください--</option>
+                        <option value="JP">日本</option>
+                        <option value="AF">アフガニスタン</option>
+                        <option value="AX">オーランド諸島</option>
+                        <option value="AL">アルバニア</option>
+                        <option value="DZ">アルジェリア</option>
+                        <option value="AD">アンドラ</option>
+                        <option value="AO">アンゴラ</option>
+                        <option value="AI">アンギラ</option>
+                        <option value="AQ">南極</option>
+                        <option value="AG">アンティグア・バーブーダ</option>
+                        <option value="AR">アルゼンチン</option>
+                        <option value="AM">アルメニア</option>
+                        <option value="AW">アルバ</option>
+                        <option value="AU">オーストラリア</option>
+                        <option value="AT">オーストリア</option>
+                        <option value="AZ">アゼルバイジャン</option>
+                        <option value="BS">バハマ</option>
+                        <option value="BH">バーレーン</option>
+                        <option value="BD">バングラデシュ</option>
+                        <option value="BB">バルバドス</option>
+                        <option value="BY">ベラルーシ</option>
+                        <option value="BE">ベルギー</option>
+                        <option value="BZ">ベリーズ</option>
+                        <option value="BJ">ベナン</option>
+                        <option value="BM">バミューダ</option>
+                        <option value="BT">ブータン</option>
+                        <option value="BO">ボリビア多民族国</option>
+                        <option value="BQ">ボネール、シント・ユースタティウスおよびサバ</option>
+                        <option value="BA">ボスニア・ヘルツェゴビナ</option>
+                        <option value="BW">ボツワナ</option>
+                        <option value="BV">ブーベ島</option>
+                        <option value="BR">ブラジル</option>
+                        <option value="IO">イギリス領インド洋地域</option>
+                        <option value="BN">ブルネイ・ダルサラーム</option>
+                        <option value="BG">ブルガリア</option>
+                        <option value="BF">ブルキナファソ</option>
+                        <option value="BI">ブルンジ</option>
+                        <option value="KH">カンボジア</option>
+                        <option value="CM">カメルーン</option>
+                        <option value="CA">カナダ</option>
+                        <option value="CV">カーボベルデ</option>
+                        <option value="KY">ケイマン諸島</option>
+                        <option value="CF">中央アフリカ共和国</option>
+                        <option value="TD">チャド</option>
+                        <option value="CL">チリ</option>
+                        <option value="CN">中国</option>
+                        <option value="CX">クリスマス島</option>
+                        <option value="CC">ココス（キーリング）諸島</option>
+                        <option value="CO">コロンビア</option>
+                        <option value="KM">コモロ</option>
+                        <option value="CG">コンゴ共和国</option>
+                        <option value="CD">コンゴ民主共和国</option>
+                        <option value="CK">クック諸島</option>
+                        <option value="CR">コスタリカ</option>
+                        <option value="CI">コートジボワール</option>
+                        <option value="HR">クロアチア</option>
+                        <option value="CW">キュラソー</option>
+                        <option value="CY">キプロス</option>
+                        <option value="CZ">チェコ</option>
+                        <option value="DK">デンマーク</option>
+                        <option value="DJ">ジブチ</option>
+                        <option value="DM">ドミニカ国</option>
+                        <option value="DO">ドミニカ共和国</option>
+                        <option value="EC">エクアドル</option>
+                        <option value="EG">エジプト</option>
+                        <option value="SV">エルサルバドル</option>
+                        <option value="GQ">赤道ギニア</option>
+                        <option value="ER">エリトリア</option>
+                        <option value="EE">エストニア</option>
+                        <option value="SZ">エスワティニ</option>
+                        <option value="ET">エチオピア</option>
+                        <option value="FK">フォークランド諸島（マルビナス）</option>
+                        <option value="FO">フェロー諸島</option>
+                        <option value="FJ">フィジー</option>
+                        <option value="FI">フィンランド</option>
+                        <option value="FR">フランス</option>
+                        <option value="GF">フランス領ギアナ</option>
+                        <option value="PF">フランス領ポリネシア</option>
+                        <option value="TF">フランス領南方・南極地域</option>
+                        <option value="GA">ガボン</option>
+                        <option value="GM">ガンビア</option>
+                        <option value="GE">ジョージア</option>
+                        <option value="DE">ドイツ</option>
+                        <option value="GH">ガーナ</option>
+                        <option value="GI">ジブラルタル</option>
+                        <option value="GR">ギリシャ</option>
+                        <option value="GL">グリーンランド</option>
+                        <option value="GD">グレナダ</option>
+                        <option value="GP">グアドループ</option>
+                        <option value="GT">グアテマラ</option>
+                        <option value="GG">ガーンジー</option>
+                        <option value="GN">ギニア</option>
+                        <option value="GW">ギニアビサウ</option>
+                        <option value="GY">ガイアナ</option>
+                        <option value="HT">ハイチ</option>
+                        <option value="HM">ハード島とマクドナルド諸島</option>
+                        <option value="VA">ローマ教皇庁（バチカン市国）</option>
+                        <option value="HN">ホンジュラス</option>
+                        <option value="HU">ハンガリー</option>
+                        <option value="IS">アイスランド</option>
+                        <option value="IN">インド</option>
+                        <option value="ID">インドネシア</option>
+                        <option value="IQ">イラク</option>
+                        <option value="IE">アイルランド</option>
+                        <option value="IM">マン島</option>
+                        <option value="IL">イスラエル</option>
+                        <option value="IT">イタリア</option>
+                        <option value="JM">ジャマイカ</option>
+                        <option value="JE">ジャージー</option>
+                        <option value="JO">ヨルダン</option>
+                        <option value="KZ">カザフスタン</option>
+                        <option value="KE">ケニア</option>
+                        <option value="KI">キリバス</option>
+                        <option value="KR">韓国</option>
+                        <option value="XK">コソボ</option>
+                        <option value="KW">クウェート</option>
+                        <option value="KG">キルギス</option>
+                        <option value="LA">ラオス人民民主共和国</option>
+                        <option value="LV">ラトビア</option>
+                        <option value="LB">レバノン</option>
+                        <option value="LS">レソト</option>
+                        <option value="LR">リベリア</option>
+                        <option value="LY">リビア</option>
+                        <option value="LI">リヒテンシュタイン</option>
+                        <option value="LT">リトアニア</option>
+                        <option value="LU">ルクセンブルク</option>
+                        <option value="MO">マカオ</option>
+                        <option value="MG">マダガスカル</option>
+                        <option value="MW">マラウイ</option>
+                        <option value="MY">マレーシア</option>
+                        <option value="MV">モルディブ</option>
+                        <option value="ML">マリ</option>
+                        <option value="MT">マルタ</option>
+                        <option value="MQ">マルティニーク</option>
+                        <option value="MR">モーリタニア</option>
+                        <option value="MU">モーリシャス</option>
+                        <option value="YT">マヨット</option>
+                        <option value="MX">メキシコ</option>
+                        <option value="MD">モルドバ共和国</option>
+                        <option value="MC">モナコ</option>
+                        <option value="MN">モンゴル</option>
+                        <option value="ME">モンテネグロ</option>
+                        <option value="MS">モントセラト</option>
+                        <option value="MA">モロッコ</option>
+                        <option value="MZ">モザンビーク</option>
+                        <option value="MM">ミャンマー</option>
+                        <option value="NA">ナミビア</option>
+                        <option value="NR">ナウル</option>
+                        <option value="NP">ネパール</option>
+                        <option value="NL">オランダ</option>
+                        <option value="NC">ニューカレドニア</option>
+                        <option value="NZ">ニュージーランド</option>
+                        <option value="NI">ニカラグア</option>
+                        <option value="NE">ニジェール</option>
+                        <option value="NG">ナイジェリア</option>
+                        <option value="NU">ニウエ</option>
+                        <option value="NF">ノーフォーク島</option>
+                        <option value="MK">北マケドニア</option>
+                        <option value="NO">ノルウェー</option>
+                        <option value="OM">オマーン</option>
+                        <option value="PK">パキスタン</option>
+                        <option value="PS">パレスチナ</option>
+                        <option value="PA">パナマ</option>
+                        <option value="PG">パプアニューギニア</option>
+                        <option value="PY">パラグアイ</option>
+                        <option value="PE">ペルー</option>
+                        <option value="PH">フィリピン</option>
+                        <option value="PN">ピトケアン</option>
+                        <option value="PL">ポーランド</option>
+                        <option value="PT">ポルトガル</option>
+                        <option value="QA">カタール</option>
+                        <option value="RE">レユニオン</option>
+                        <option value="RO">ルーマニア</option>
+                        <option value="RU">ロシア連邦</option>
+                        <option value="RW">ルワンダ</option>
+                        <option value="BL">サン・バルテルミー</option>
+                        <option value="SH">セントヘレナ・アセンションおよびトリスタン・ダ・クーニャ</option>
+                        <option value="KN">セントクリストファー・ネイビス</option>
+                        <option value="LC">セントルシア</option>
+                        <option value="MF">サン・マルタン（フランス領）</option>
+                        <option value="PM">サンピエール島・ミクロン島</option>
+                        <option value="VC">セントビンセントおよびグレナディーン諸島</option>
+                        <option value="WS">サモア</option>
+                        <option value="SM">サンマリノ</option>
+                        <option value="ST">サントメ・プリンシペ</option>
+                        <option value="SA">サウジアラビア</option>
+                        <option value="SN">セネガル</option>
+                        <option value="RS">セルビア</option>
+                        <option value="SC">セーシェル</option>
+                        <option value="SL">シエラレオネ</option>
+                        <option value="SG">シンガポール</option>
+                        <option value="SX">シント・マールテン（オランダ領）</option>
+                        <option value="SK">スロバキア</option>
+                        <option value="SI">スロベニア</option>
+                        <option value="SB">ソロモン諸島</option>
+                    <option value="SO">ソマリア</option>
+                    <option value="ZA">南アフリカ</option>
+                    <option value="GS">サウスジョージア・サウスサンドウィッチ諸島</option>
+                    <option value="SS">南スーダン</option>
+                    <option value="ES">スペイン</option>
+                    <option value="LK">スリランカ</option>
+                    <option value="SR">スリナム</option>
+                    <option value="SJ">スヴァールバル諸島およびヤンマイエン島</option>
+                    <option value="SE">スウェーデン</option>
+                    <option value="CH">スイス</option>
+                    <option value="TW">台湾</option>
+                    <option value="TJ">タジキスタン</option>
+                    <option value="TZ">タンザニア</option>
+                    <option value="TH">タイ</option>
+                    <option value="TL">東ティモール</option>
+                    <option value="TG">トーゴ</option>
+                    <option value="TK">トケラウ</option>
+                    <option value="TO">トンガ</option>
+                    <option value="TT">トリニダード・トバゴ</option>
+                    <option value="TN">チュニジア</option>
+                    <option value="TR">トルコ</option>
+                    <option value="TM">トルクメニスタン</option>
+                    <option value="TC">タークス・カイコス諸島</option>
+                    <option value="TV">ツバル</option>
+                    <option value="UG">ウガンダ</option>
+                    <option value="UA">ウクライナ</option>
+                    <option value="AE">アラブ首長国連邦</option>
+                    <option value="GB">イギリス</option>
+                    <option value="US">アメリカ合衆国</option>
+                    <option value="UY">ウルグアイ</option>
+                    <option value="UZ">ウズベキスタン</option>
+                    <option value="VU">バヌアツ</option>
+                    <option value="VE">ベネズエラ・ボリバル共和国</option>
+                    <option value="VN">ベトナム</option>
+                    <option value="VG">イギリス領ヴァージン諸島</option>
+                    <option value="WF">ウォリス・フツナ</option>
+                    <option value="EH">西サハラ</option>
+                    <option value="YE">イエメン</option>
+                    <option value="ZM">ザンビア</option>
+                    <option value="ZW">ジンバブエ</option>
+                </select><br>
+            </div>
+            <br>
+            <br>
+            折り返しの希望日時を選択してください。<br><br>
+
+            <div class="name-group">
+                 <div class="form-group">
+                    <label for="00NgK00001C37GV">第1希望日</label><input  id="00NgK00001C37GV" name="00NgK00001C37GV" type="date" /><br>
+                </div>
+ 
+                <div class="form-group">
+                    <label for="00NgK00001C8PrR">時間</label><select  id="00NgK00001C8PrR" name="00NgK00001C8PrR" title="第1希望 時間"><option value="">--なし--</option><option value="09:00 〜 10:00">09:00 〜 10:00</option>
+                        <option value="10:00 〜 11:00">10:00 〜 11:00</option>
+                        <option value="11:00 〜 12:00">11:00 〜 12:00</option>
+                        <option value="13:00 〜 14:00">13:00 〜 14:00</option>
+                        <option value="14:00 〜 15:00">14:00 〜 15:00</option>
+                        <option value="15:00 〜 16:00">15:00 〜 16:00</option>
+                        <option value="16:00 〜 17:00">16:00 〜 17:00</option>
+                        <option value="17:00 〜 18:00">17:00 〜 18:00</option>
+                    </select><br>
+                </div>
+            </div>
+
+            <div class="name-group">
+                 <div class="form-group">
+                    <label for="00NgK00001C6f7H">第2希望日</label><input  id="00NgK00001C6f7H" name="00NgK00001C6f7H" type="date" /><br>
+                </div>
+ 
+                <div class="form-group">
+                    <label for="00NgK00001C8ShF">時間</label><select  id="00NgK00001C8ShF" name="00NgK00001C8ShF" title="第2希望 時間"><option value="">--なし--</option><option value="09:00 〜 10:00">09:00 〜 10:00</option>
+                    <option value="10:00 〜 11:00">10:00 〜 11:00</option>
+                    <option value="11:00 〜 12:00">11:00 〜 12:00</option>
+                    <option value="13:00 〜 14:00">13:00 〜 14:00</option>
+                    <option value="14:00 〜 15:00">14:00 〜 15:00</option>
+                    <option value="15:00 〜 16:00">15:00 〜 16:00</option>
+                    <option value="16:00 〜 17:00">16:00 〜 17:00</option>
+                    <option value="17:00 〜 18:00">17:00 〜 18:00</option>
+                    </select><br>
+                </div>
+            </div>
+
+
+
+         <input type="hidden" name="lead_source" value="Web">
+<br><br>
+            <input type="submit" name="submit" class="submit-button" value="予約を送信">
+
+        </form>
+        
+    </div>
+</div>
+
+<script>
+    /**
+     * Converts a YYYY-MM-DD date string to MM/DD/YYYY format for Salesforce compatibility.
+     * @param {string} dateString The date string in YYYY-MM-DD format from the date input.
+     * @returns {string} The formatted date string in MM/DD/YYYY format, or an empty string if input is invalid.
+     */
+    function convertDateToSalesforceFormat(dateString) {
+        if (!dateString) {
+            return '';
+        }
+        // input type="date" always gives YYYY-MM-DD format
+        const parts = dateString.split('-'); // ["YYYY", "MM", "DD"]
+        if (parts.length === 3) {
+            // Converts to MM/DD/YYYY format, which is a common expectation for Salesforce date fields.
+            return `${parts[1]}/${parts[2]}/${parts[0]}`; 
+        }
+        return dateString; // Fallback if the format is unexpected
+    }
+
+    /**
+     * Formats date input values to a Salesforce-compatible MM/DD/YYYY format before form submission.
+     * This function is called by the onsubmit event of the form.
+     * @param {Event} event The form submission event.
+     */
+    function formatDatesBeforeSubmit(event) {
+        // Get the date input elements by their IDs
+        const firstPreferredDateInput = document.getElementById('00NgK00001C37GV');
+        const secondPreferredDateInput = document.getElementById('00NgK00001C6f7H');
+
+        console.log('--- フォーム送信前（日付フォーマット変換処理） ---');
+
+        // Format and update the value for the first preferred date
+        if (firstPreferredDateInput) {
+            const originalValue = firstPreferredDateInput.value;
+            firstPreferredDateInput.value = convertDateToSalesforceFormat(originalValue);
+            console.log('第1希望日（変換前）:', originalValue);
+            console.log('第1希望日（変換後）:', firstPreferredDateInput.value); 
+        }
+
+        // Format and update the value for the second preferred date
+        if (secondPreferredDateInput) {
+            const originalValue = secondPreferredDateInput.value;
+            secondPreferredDateInput.value = convertDateToSalesforceFormat(originalValue);
+            console.log('第2希望日（変換前）:', originalValue);
+            console.log('第2希望日（変換後）:', secondPreferredDateInput.value); 
+        }
+        console.log('--- 変換処理終了 ---');
+
+        // Note: For debugging, you can uncomment the line below to prevent actual form submission
+        // event.preventDefault(); 
+    }
+</script>
+
+</body>
+</html>
